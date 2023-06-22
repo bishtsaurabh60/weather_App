@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather App</title>
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="./src/style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header>Weather <span>App</span></header>
+      <section class="input_data">
+        <form>
+          <input
+            type="text"
+            id="location-input"
+            name="location"
+            placeholder="City or Country"
+          /><i class="fa-solid fa-magnifying-glass"></i>
+          <input type="submit" value="Search" class = submit_btn/>
+        </form>
+        <button
+          class="geolocation_button"
+          title="Get Weather Data Of Your Location"
+        >
+          <i class="fa-solid fa-location-crosshairs fa-xl"></i>
+        </button>
+      </section>
+
+      <article class="weather_data">
+        <section class="location_details">
+          <h1 class="place">London, Paris</h1>
+        </section>
+        <div class="time"></div>
+        <section class="icon">
+          <img src="" alt="icon"/>
+        </section>
+        <section class="temp"><div>23</div><p>°C</p></section>
+        <section class="min_max_temp">
+          <div>Min : 20°C</div>
+          <div>Max : 35°C</div>
+        </section>
+        <section class="description">Sunny</section>
+        <article class="weather_change_details">
+          <section class="weather_details_card">
+            <div class="details_icon">
+              <i class="fa-solid fa-temperature-three-quarters fa-xl"></i>
+            </div>
+            <div class="weather_details">
+              <p>Feels Like</p>
+              <div>
+                <div class="details_numbers">24</div>
+                <p>°C</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="weather_details_card">
+            <div class="details_icon">
+              <i class="fa-solid fa-droplet fa-xl"></i>
+            </div>
+            <div class="weather_details">
+              <p>Humidity</p>
+              <div>
+                <div class="details_numbers">84</div>
+                <p>%</p>
+              </div>
+            </div>
+          </section>
+          <section class="weather_details_card">
+            <div class="details_icon">
+              <i class="fa-solid fa-wind fa-xl"></i>
+            </div>
+            <div class="weather_details">
+              <p>Wind</p>
+              <div>
+                <div class="details_numbers">3.4</div>
+                <p>m/s</p>
+              </div>
+            </div>
+          </section>
+          <section class="weather_details_card">
+            <div class="details_icon">
+              <i class="fa-solid fa-gauge-high fa-xl"></i>
+            </div>
+            <div class="weather_details">
+              <p>Pressure</p>
+              <div>
+                <div class="details_numbers">1020</div>
+                <p>hPa</p>
+              </div>
+            </div>
+          </section>
+        </article>
+      </article>
+      <div class = 'display_error'>
+        <i class="fa-solid fa-circle-exclamation" style="color: #992222;"></i><div class = "error_description"></div>
+      </div>
+    </main>
+    <script defer type="module" src="/src/main.ts"></script>
+  </body>
+</html>

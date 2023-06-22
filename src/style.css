@@ -1,0 +1,332 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+:root {
+  --color-primary: #f3f2f2;
+  --color-secondary: #fff;
+  --color-3: rgb(27, 98, 146);
+  --color-button: #457955;
+  --radius: 15px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: rgb(236, 234, 234);
+  font-family: Poppins, sans-serif;
+  color: rgb(25, 60, 83);
+  min-height: 100vh;
+}
+
+body,
+.container,
+.weather_data,
+.weather_change_details,
+.display_error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  min-width: 40%;
+  background-color: var(--color-secondary);
+  border-radius: var(--radius);
+  flex-direction: column;
+  padding: 1rem;
+  box-shadow: 7px 7px 20px rgba(0, 0, 0, 0.05);
+}
+
+header {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+header span {
+  color: var(--color-3);
+}
+.input_data {
+  display: flex;
+  align-items: center;
+  padding: 0 2rem;
+  gap: 0.5rem;
+  width: 100%;
+}
+form {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  position: relative;
+  gap: 0.5rem;
+}
+form input[type="text"] {
+  border: none;
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  background-color: var(--color-primary);
+  padding: 0.5rem 2.5rem;
+  outline: none;
+  width: 75%;
+}
+
+form input[type="text"] + i {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  font-size: 15px;
+}
+
+form input[type="submit"] {
+  border: none;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  padding: 0 1rem;
+  display: inline-block;
+  font-weight: 400;
+  background-color: var(--color-3);
+  color: var(--color-secondary);
+  transition: transform 0.1s ease-in-out;
+}
+
+form input[type="submit"],.geolocation_button:hover{
+  cursor: pointer;
+}
+
+form input[type="submit"]:active,.geolocation_button:active {
+  transform: scale(0.95);
+}
+
+.geolocation_button {
+  border: none;
+  border-radius: var(--radius);
+  padding: 9px;
+  font-weight: bold;
+  background-color: var(--color-button);
+  color: var(--color-secondary);
+  transition: transform 0.1s ease-in-out;
+}
+
+.weather_data {
+  flex-direction: column;
+  text-align: center;
+  display: none;
+  width: 100%;
+  padding: 0 2rem;
+}
+
+.weather_data .icon {
+  height: 150px;
+  width: 150px;
+  display: flex;
+  justify-content: center;
+  animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0% {
+    transform: scale(1.8);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1.8);
+  }
+}
+
+img {
+  width: 100%;
+  height: 100%;
+}
+
+.weather_data .temp {
+  display: flex;
+  font-size: 4rem;
+  font-weight: 700;
+  line-height: 4rem;
+}
+.weather_data .temp p {
+  color: var(--color-button);
+}
+
+.min_max_temp {
+  width: 100%;
+  display: flex;
+  margin-top: 0.5rem;
+  justify-content: space-between;
+}
+
+.description {
+  font-size: 1.5rem;
+  margin: 0.5rem;
+  font-weight: 300;
+  background-color: var(--color-3);
+  color: var(--color-secondary);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius);
+}
+
+.location_details {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 2rem;
+}
+
+.weather_change_details {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin-top: 0.5rem;
+  grid-gap: 0.5rem 1.5rem;
+  width: 100%;
+}
+
+.weather_details_card {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  background: var(--color-primary);
+  padding: 0.5rem;
+  padding-left: 1rem;
+  border-radius: var(--radius);
+}
+
+.weather_details {
+  font-size: 0.8rem;
+  text-align: start;
+}
+
+.weather_details > div {
+  display: flex;
+}
+.display_error {
+  display: none;
+  margin-top: 1rem;
+  gap: 0.5rem;
+}
+.display_error .error_description {
+  font-size: 1rem;
+  font-weight: 600;
+  color: rgb(153, 34, 34);
+}
+
+@media only screen and (width<=540px) {
+  .container {
+    margin: 1rem;
+    padding: 1rem 0;
+  }
+  .weather_data,.input_data{
+    padding: 0 1rem;
+  }
+  .weather_change_details {
+    grid-template-columns: 1fr;
+    grid-gap: 0.8rem;
+  }
+  .weather_details_card {
+    padding-left: 0;
+    justify-content: center;
+    font-size: 1.5rem;
+    width: 100%;
+  }
+
+  .weather_details {
+    font-size: 1rem;
+  }
+
+  .location_details {
+    align-items: flex-start;
+  }
+
+  form {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  form input[type="text"],
+  form input[type="submit"] {
+    font-size: 1.3rem;
+    width: 100%;
+    padding: 0.5rem 2.5rem;
+  }
+
+  .geolocation_button {
+    justify-content: flex-end;
+    font-size: 1.3rem;
+    border-radius: 50px;
+    padding: 2rem 1rem;
+    align-items: center;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 935px){
+  .container{
+    min-height: 90vh;
+    font-size: 2rem;
+  }
+
+  form input[type="text"],
+  form input[type="submit"],
+  .geolocation_button,
+  .weather_details,
+  .weather_data .temp
+  {
+    padding: 1rem;
+  }
+
+  form input[type="text"],
+  form input[type="submit"],
+  .geolocation_button,
+  .weather_details,
+  form input[type="text"]+i{
+    font-size: 1.5rem;
+  }
+
+  form input[type="text"]{
+    padding: 0.5rem 2.5rem;
+  }
+   
+  form input[type="text"]+i{
+    top: 18px;
+  }
+
+  .weather_data .place{
+    font-size: 3.5rem;
+  }
+
+  .weather_data .icon{
+    width: 200px;
+    height: 200px;
+  }
+
+  .weather_data section h1,.description{
+    font-size: 3rem;
+  }
+  .weather_data .description,.weather_details_card .details_icon{
+    padding: 1rem 2rem;
+  }
+
+  .weather_data .temp{
+    font-size: 6rem;
+  }
+
+  .weather_change_details{
+    grid-row-gap: 1.5rem;
+  }
+
+  .weather_data .description{
+    margin: 1rem;
+  }
+  .weather_data section{
+    padding: 0.5rem 0;
+  }
+}
+
+@media only screen and (width <= 936px) {
+  .container {
+    width: 90%;
+  }
+}
