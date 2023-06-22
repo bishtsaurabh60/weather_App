@@ -1,6 +1,6 @@
 import { geoUrlType } from "../modules/getWeatherData";
 
-const url: string = "https://api.openweathermap.org/data/2.5/weather?";
+// const url: string = "https://api.openweathermap.org/data/2.5/weather?";
 
 let serverlessApiDes: string = `./.netlify/function/`;
 
@@ -31,24 +31,24 @@ export interface WeatherType{
   ]
 }
 
-export const hostMode: boolean = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+// export const hostMode: boolean = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 
 
 // In DEV MODE
-const getData = async (api: string): Promise<WeatherType> => {
-  try {
-    console.log(api);
+// const getData = async (api: string): Promise<WeatherType> => {
+//   try {
+//     console.log(api);
     
-    const response = await fetch(`${url}${api}`);
-    if (!response.ok) {
-      throw new Error("Unable to fetch weather data.");
-    }
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    throw new Error(`Unable to fetch weather data.${error}`);
-  }
-};
+//     const response = await fetch(`${url}${api}`);
+//     if (!response.ok) {
+//       throw new Error("Unable to fetch weather data.");
+//     }
+//     const data = await response.json();
+//     return data;
+//   } catch (error) {
+//     throw new Error(`Unable to fetch weather data.${error}`);
+//   }
+// };
 
 
 // In PRODUCTION Mode
@@ -71,4 +71,5 @@ const getDataServerless = async (api: string,urlData?:geoUrlType | string): Prom
   }
 };
 
-export { getData, getDataServerless };
+// export { getData, getDataServerless };
+export { getDataServerless };

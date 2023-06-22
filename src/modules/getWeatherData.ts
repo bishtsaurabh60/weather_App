@@ -1,4 +1,5 @@
-import {getData, getDataServerless, hostMode } from '../api/weatherAPI';
+// import {getData, getDataServerless, hostMode } from '../api/weatherAPI';
+import {getDataServerless } from '../api/weatherAPI';
 import { getWeatherReport,showError } from './displayData';
 
 // const APIKey: string = "YOUR_API_KEY";
