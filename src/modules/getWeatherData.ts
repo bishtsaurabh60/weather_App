@@ -1,9 +1,9 @@
 import {getData, getDataServerless, hostMode } from '../api/weatherAPI';
 import { getWeatherReport,showError } from './displayData';
 
-const APIKey: string = "YOUR_API_KEY";
+// const APIKey: string = "YOUR_API_KEY";
 
-let api: string;
+// let api: string;
 
 
 // data fetching by city or country
@@ -23,13 +23,13 @@ const getWeatherData = async (city:string): Promise<void> => {
   try {
     let dataWeather;
     
-    if (hostMode) {
-      api = `q=${city}&units=metric&appid=${APIKey}`;
-      dataWeather = await getData(api);
-      console.log(dataWeather);
-    } else {
+    // if (hostMode) {
+    //   api = `q=${city}&units=metric&appid=${APIKey}`;
+    //   dataWeather = await getData(api);
+    //   console.log(dataWeather);
+    // } else {
       dataWeather = await getDataServerless('get_weather_place', city);
-    }
+    // }
 
     getWeatherReport(dataWeather);
   } catch (error) {
@@ -70,12 +70,12 @@ const byGeoLocation = async (position: GeolocationPosition) : Promise<void> => {
   try {
     
     let data;
-    if (hostMode) {
-      api = `lat=${latitude}&lon=${longitude}&units=metric&appid=${APIKey}`;
-      data = await getData(api);
-    } else {
+    // if (hostMode) {
+    //   api = `lat=${latitude}&lon=${longitude}&units=metric&appid=${APIKey}`;
+    //   data = await getData(api);
+    // } else {
       data = await getDataServerless('get_weather_geo',urlGeoData);
-    }
+    // }
     
     getWeatherReport(data);
   } catch (error) {
