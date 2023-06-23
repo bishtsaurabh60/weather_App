@@ -20,26 +20,9 @@ import { getWeatherReport,showError } from './displayData';
 //   }
 // };
 
-const getWeatherData = async (city:string): Promise<void> => {
-  try {
-    let dataWeather;
-    
-    // if (hostMode) {
-    //   api = `q=${city}&units=metric&appid=${APIKey}`;
-    //   dataWeather = await getData(api);
-    //   console.log(dataWeather);
-    // } else {
-      dataWeather = await getDataServerless('get_weather_place', city);
-    // }
-
-    getWeatherReport(dataWeather);
-  } catch (error) {
-    showError(`Please enter correct city or country name.`);
-    throw new Error(`${error}`);
-  }
-};
 
 // data fetching by geolocation
+
 // const byGeoLocation = async (position: GeolocationPosition) : Promise<void> => {
 //   console.log(position);
 //   const { latitude, longitude } = position.coords;
@@ -54,14 +37,28 @@ const getWeatherData = async (city:string): Promise<void> => {
 //   }
 // };
 
+
+// getWeather Data by using city, country
+
+const getWeatherData = async (city:string): Promise<void> => {
+  try {
+     const dataWeather = await getDataServerless('get_weather_place', city); 
+    getWeatherReport(dataWeather);
+  } catch (error) {
+    showError(`Please enter correct city or country name.`);
+    throw new Error(`${error}`);
+  }
+};
+
 export type geoUrlType = {
   latitude: number,
   longitude: number,
   units:string
 }
 
+// get weather data by using geolocation
+
 const byGeoLocation = async (position: GeolocationPosition) : Promise<void> => {
-  console.log(position);
   const { latitude, longitude } = position.coords;
   const urlGeoData: geoUrlType = {
     latitude,
@@ -69,14 +66,7 @@ const byGeoLocation = async (position: GeolocationPosition) : Promise<void> => {
     units:'metric'
   }
   try {
-    
-    let data;
-    // if (hostMode) {
-    //   api = `lat=${latitude}&lon=${longitude}&units=metric&appid=${APIKey}`;
-    //   data = await getData(api);
-    // } else {
-      data = await getDataServerless('get_weather_geo',urlGeoData);
-    // }
+    const data = await getDataServerless('get_weather_geo',urlGeoData);
     
     getWeatherReport(data);
   } catch (error) {

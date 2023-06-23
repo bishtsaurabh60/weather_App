@@ -16,7 +16,6 @@ formEle?.addEventListener("submit", (event) => {
 
   getWeatherData(city.toLowerCase())
     .then(() => {
-      console.log("location", location_input?.value);
       location_input!.value = "";
     })
     .catch((error) => {

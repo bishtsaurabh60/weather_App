@@ -1,11 +1,12 @@
 import fetch from 'node-fetch';
 
-const { WEATHER_API_KEY } = import.meta.env;
+const { WEATHER_API_KEY } = process.env;
 
-export async function handler(event, context) {
+export async function handler(event) {
   const params = JSON.parse(event.body);
   const { latitude, longitude, units } = params;
   const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=${units}&appid=${WEATHER_API_KEY}`;
+
   const encodedUrl = encodeURI(url);
   try {
     const weatherStream = await fetch(encodedUrl);

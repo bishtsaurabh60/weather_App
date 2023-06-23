@@ -1,8 +1,7 @@
 import { geoUrlType } from "../modules/getWeatherData";
 
-// const url: string = "https://api.openweathermap.org/data/2.5/weather?";
 
-let serverlessApiDes: string = `./.netlify/function/`;
+let serverlessApiDes: string = `./.netlify/functions/`;
 
 export interface WeatherType{
   wind: {
@@ -31,10 +30,10 @@ export interface WeatherType{
   ]
 }
 
-// export const hostMode: boolean = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+// In DEV MODE without serverless functions
 
+// const url: string = "https://api.openweathermap.org/data/2.5/weather?"; 
 
-// In DEV MODE
 // const getData = async (api: string): Promise<WeatherType> => {
 //   try {
 //     console.log(api);
@@ -54,9 +53,7 @@ export interface WeatherType{
 // In PRODUCTION Mode
 
 const getDataServerless = async (api: string,urlData?:geoUrlType | string): Promise<WeatherType> => {
-  try {
-    console.log(api);
-    
+  try { 
     const response = await fetch(`${serverlessApiDes}${api}`, {
       method: 'POST',
       body: JSON.stringify(urlData)

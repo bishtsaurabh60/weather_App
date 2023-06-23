@@ -1,10 +1,9 @@
 import fetch from "node-fetch";
 
-const { WEATHER_API_KEY } = import.meta.env;
+const { WEATHER_API_KEY } = process.env;
 
-export async function handler(event, context) {
-    const params = JSON.parse(event.body);
-    const { city } = params;
+export async function handler(event) {
+  const city = JSON.parse(event.body);
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${WEATHER_API_KEY}`;
     
   const encodedUrl = encodeURI(url);
