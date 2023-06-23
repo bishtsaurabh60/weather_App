@@ -7,7 +7,7 @@ location_input?.focus();
 
 formEle?.addEventListener("submit", (event) => {
   event.preventDefault();
-  const city = location_input?.value;
+  const city = location_input?.value.trim();
   
   if (!city) {
     showError(`Please enter city or country name.`);
