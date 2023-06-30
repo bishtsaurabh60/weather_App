@@ -1,5 +1,5 @@
 // import {getData, getDataServerless, hostMode } from '../api/weatherAPI';
-import {getDataServerless } from '../api/weatherAPI';
+import {WeatherType, getDataServerless } from '../api/weatherAPI';
 import { getWeatherReport,showError } from './displayData';
 
 // const APIKey: string = "YOUR_API_KEY";
@@ -40,13 +40,36 @@ import { getWeatherReport,showError } from './displayData';
 
 // getWeather Data by using city, country
 
-const getWeatherData = async (city:string): Promise<void> => {
+// const getWeatherData = async (city:string): Promise<void> => {
+//   try {
+//      const dataWeather = await getDataServerless('get_weather_place', city);
+//     getWeatherReport(dataWeather);
+//   } catch (error) {
+//     showError(`Please enter correct city or country name.`);
+//     throw new Error(`${error}`);
+//   }
+// };
+
+export interface cityInfoType{
+  city: string,
+  countryName:string | undefined
+}
+
+const getWeatherData = async (city: string, stateAndCountry?: string) => {
+  const hasComma = stateAndCountry?.indexOf(",") !== -1;
+  const countryName = (!hasComma)?stateAndCountry:stateAndCountry?.split(",")[1].trim();
+  
+  const cityInfo: cityInfoType = {
+    city,countryName:countryName?.toUpperCase()
+  }
+
+  // api = `q=${city},${countryName}&units=metric&appid=${APIKey}`;
   try {
-     const dataWeather = await getDataServerless('get_weather_place', city); 
-    getWeatherReport(dataWeather);
+    const data = await getDataServerless('get_weather_place', cityInfo);
+    getWeatherReport(data as WeatherType,stateAndCountry);
   } catch (error) {
     showError(`Please enter correct city or country name.`);
-    throw new Error(`${error}`);
+    throw new Error(`${ error }`);
   }
 };
 
@@ -66,9 +89,9 @@ const byGeoLocation = async (position: GeolocationPosition) : Promise<void> => {
     units:'metric'
   }
   try {
-    const data = await getDataServerless('get_weather_geo',urlGeoData);
+    const data = await getDataServerless('get_weather_geo', urlGeoData);
     
-    getWeatherReport(data);
+    getWeatherReport(data as WeatherType);
   } catch (error) {
     showError(`Not able to access your Geolocation Coordinates.`);
     throw new Error(`${error}`);

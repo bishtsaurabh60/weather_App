@@ -16,9 +16,10 @@ export const temperature: EleOrNull = query(".temp", weather_data);
 export const minMaxTemp: EleOrNull = query(".min_max_temp", weather_data);
 export const weather_description: EleOrNull = query(".description", weather_data);
 
-export const formEle: EleOrNull = query("form");
 export const location_input: HTMLInputElement | null = document.getElementById("location-input") as HTMLInputElement;
 
 export const geoLocationBtn: EleOrNull = query(".geolocation_button");
 
 export const displayError: EleOrNull = query(".display_error");
+
+export const result:HTMLInputElement | null = document.getElementById("result") as HTMLInputElement;

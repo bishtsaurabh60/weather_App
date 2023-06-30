@@ -21,15 +21,15 @@
     <main class="container">
       <header>Weather <span>App</span></header>
       <section class="input_data">
-        <form>
-          <input
+        <div class="search_field">
+            <input
             type="text"
             id="location-input"
             name="location"
-            placeholder="City or Country"
-          /><i class="fa-solid fa-magnifying-glass"></i>
-          <input type="submit" value="Search" class = submit_btn/>
-        </form>
+            placeholder="Search for a City Name"
+            /><i class="fa-solid fa-magnifying-glass"></i>
+          <div id="result"></div>
+        </div>
         <button
           class="geolocation_button"
           title="Get Weather Data Of Your Location"

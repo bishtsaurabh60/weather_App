@@ -9,20 +9,38 @@ import {
   minMaxTemp,
   weather_description,
   displayError,
+  result,
 } from "../modules/selectors";
 import { convertCountryCode, formatDateTime } from "./conversion";
 
-const getWeatherReport = (weatherData:WeatherType):void => {
-    const { wind, sys, name, dt, timezone } = weatherData;
+const getWeatherReport = (weatherData:WeatherType,stateAndCountryIf?:string):void => {
+  const { wind, sys, name, dt, timezone } = weatherData;
   const { temp, temp_min, temp_max, feels_like, humidity, pressure } = weatherData.main;
   const { icon, description } = weatherData.weather[0];
   
   // Place and time
   const timezoneOffset = timezone / 3600; // Convert timezone to timezone offset from seconds to hours
   const formattedDateTime = formatDateTime(dt, timezoneOffset);
+
+  let state;
+  let countryName: string | undefined;
   
-  const country = convertCountryCode(sys.country);
-  place!.textContent = `${name}, ${country}`;
+  if (stateAndCountryIf !== undefined) {
+    const hasComma = stateAndCountryIf?.indexOf(",") !== -1;
+    if (hasComma) {
+      state = stateAndCountryIf.split(",")[0];
+      countryName = stateAndCountryIf.split(",")[1].trim().toUpperCase();
+    } else if (stateAndCountryIf!=='')
+      countryName = stateAndCountryIf.trim().toUpperCase();
+  }
+  if(stateAndCountryIf==='' || stateAndCountryIf===undefined) {
+    state = '';
+    countryName = sys.country;
+  }
+  
+  const country:string | undefined= convertCountryCode(countryName as string);
+  place!.textContent =
+    (state!==undefined && state!=='')? `${name}, ${state}, ${country}` : `${name}, ${country}`;
   time!.textContent = formattedDateTime;
   
   // weather icon
@@ -47,6 +65,7 @@ const getWeatherReport = (weatherData:WeatherType):void => {
   header!.style.display = "none";
   displayError!.style.display = "none";
   weather_data!.style.display = "flex";
+  result!.innerHTML='';
 };
 
 

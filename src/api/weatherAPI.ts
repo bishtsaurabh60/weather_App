@@ -1,4 +1,4 @@
-import { geoUrlType } from "../modules/getWeatherData";
+import { cityInfoType, geoUrlType } from "../modules/getWeatherData";
 
 
 let serverlessApiDes: string = `./.netlify/functions/`;
@@ -30,6 +30,11 @@ export interface WeatherType{
   ]
 }
 
+export type cityType=[{
+    name: string,
+    country: string,
+  state?: string,
+  }];
 // In DEV MODE without serverless functions
 
 // const url: string = "https://api.openweathermap.org/data/2.5/weather?"; 
@@ -52,7 +57,7 @@ export interface WeatherType{
 
 // In PRODUCTION Mode
 
-const getDataServerless = async (api: string,urlData?:geoUrlType | string): Promise<WeatherType> => {
+const getDataServerless = async (api: string, urlData?: geoUrlType | cityInfoType | string): Promise<WeatherType | cityType> => {
   try { 
     const response = await fetch(`${serverlessApiDes}${api}`, {
       method: 'POST',

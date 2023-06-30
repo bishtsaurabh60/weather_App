@@ -16,9 +16,9 @@ const formatDateTime = (timestamp:number, timezoneOffset:number): string => {
 };
 
 // convert country code to name using Intl Object
-const convertCountryCode = (country:string) : string | undefined=> {
-  let regionNames = new Intl.DisplayNames(["en"], { type: "region" });
-  return regionNames.of(country);
-}
+const convertCountryCode = (country: string): string | undefined => {
+  const countryNameOrCode = new Intl.DisplayNames(["en"], { type: "region" });
+    return countryNameOrCode.of(country);
+ }
 
 export { formatDateTime, convertCountryCode };

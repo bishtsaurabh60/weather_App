@@ -1,27 +1,81 @@
-import { formEle, location_input, geoLocationBtn } from './modules/selectors';
-import { showError } from './modules/displayData';
+import { location_input, geoLocationBtn, result } from './modules/selectors';
 import { getWeatherData,byGeoLocation } from './modules/getWeatherData';
-// event handlers
+import { search } from './modules/searchCity';
+
+export let search_input:string;
 
 location_input?.focus();
 
-formEle?.addEventListener("submit", (event) => {
-  event.preventDefault();
-  const city = location_input?.value.trim();
-  
-  if (!city) {
-    showError(`Please enter city or country name.`);
-    return;
-  }
+// event handlers
 
-  getWeatherData(city.toLowerCase())
-    .then(() => {
-      location_input!.value = "";
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+// debounce 
+
+const debounce = <T extends unknown[]>(func: (...args: T) => Promise<void>, delay: number) => {
+  let timeoutId: ReturnType<typeof setTimeout> | undefined;
+  return function (...args:T) {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      func.apply(null, args);
+    }, delay);
+  };
+}
+
+const debounceLimit = debounce(search,500);
+
+// event handlers
+
+location_input?.addEventListener("input", (e: Event) => {
+  const target = e.target as HTMLInputElement;
+  search_input = target.value;
+  debounceLimit();
 });
+
+location_input?.addEventListener("keypress", (e: KeyboardEvent) => {
+  if (e.key === 'Enter') {
+    const target = e.target as HTMLInputElement;
+    const locationInfo: string = target.value;
+    const hasComma = locationInfo.indexOf(",") !== -1;
+    
+    let cityName = hasComma?locationInfo?.split(',')[0]:locationInfo;
+    let stateCountryInfo = hasComma?locationInfo?.split(',')[1].trim():'';
+
+    getWeatherData(cityName, stateCountryInfo)
+      .then(() => {
+        location_input!.value = "";
+        result!.innerHTML = '';
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+   }
+  }
+);
+
+result?.addEventListener('click', (event: MouseEvent) => {
+  const clickedElement = event.target as HTMLElement;
+  let cityName: string | undefined | null;
+  let stateCountryInfo: string | undefined | null;
+
+  if (clickedElement.tagName === 'H3') {
+    cityName = clickedElement.textContent;
+    stateCountryInfo = clickedElement.nextElementSibling?.textContent;
+  } else if (clickedElement.tagName === 'P') {
+    cityName = clickedElement.previousElementSibling?.textContent;
+    stateCountryInfo = clickedElement.textContent;
+  }
+   
+  
+  if (cityName && stateCountryInfo) {
+    getWeatherData(cityName, stateCountryInfo)
+      .then(() => {
+        location_input!.value = "";
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+});
+
 
 geoLocationBtn?.addEventListener("click", () => {
   if (navigator.geolocation) {
